@@ -15,12 +15,14 @@ app.use(cors());
 app.use("/api/v1", router);
 
 const test = (req: Request, res: Response) => {
+  // Promise.reject();
   const a = "server is running LALALALALALALALA";
   res.send(a);
 };
 // console.log(process.cwd());
 
 app.get("/", test);
+
 app.use(globalErrorHandler);
 app.use(NotFound);
 
