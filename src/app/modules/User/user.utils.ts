@@ -41,3 +41,44 @@ export const generatedStudentId = async (payload: TAcademicSemester) => {
   incrementId = `${payload.year}${payload.code}${incrementId}`;
   return incrementId;
 };
+
+export const generatedFacultyId = async () => {
+  let facultyId = (0).toString();
+
+  const IsFacultyExist = await User.findOne(
+    { role: "faculty" },
+    { id: 1, _id: 0 },
+    { sort: { createdAt: -1 } }
+  );
+  console.log(IsFacultyExist);
+  if (IsFacultyExist) {
+    const currentFacultyId = IsFacultyExist.id.split("-")[1];
+
+    facultyId = (Number(currentFacultyId) + 1).toString().padStart(4, "0");
+    console.log(facultyId);
+  } else {
+    facultyId = (Number(facultyId) + 1).toString().padStart(4, "0");
+  }
+
+  return `F-${facultyId}`;
+};
+export const generatedAdminId = async () => {
+  let adminId = (0).toString();
+
+  const IsAdminExist = await User.findOne(
+    { role: "admin" },
+    { id: 1, _id: 0 },
+    { sort: { createdAt: -1 } }
+  );
+  console.log(IsAdminExist);
+  if (IsAdminExist) {
+    const currentFacultyId = IsAdminExist.id.split("-")[1];
+
+    adminId = (Number(currentFacultyId) + 1).toString().padStart(4, "0");
+    
+  } else {
+    adminId = (Number(adminId) + 1).toString().padStart(4, "0");
+  }
+
+  return `A-${adminId}`;
+};

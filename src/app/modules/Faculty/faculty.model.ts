@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TFaculty, TUserName } from './faculty.interface';
+import { TFaculty, TUserName } from "./faculty.interface";
 import { BloodGroup, Gender } from "./faculty.constant";
 const { Schema, model } = mongoose;
 
@@ -80,8 +80,8 @@ const facultySchema = new Schema<TFaculty>(
     profileImg: { type: String },
     academicDepartment: {
       type: Schema.Types.ObjectId,
-      required: [true, "User id is required"],
-      ref: "User",
+      required: [true, "Academic Department id is required"],
+      ref: "AcademicDepartment",
     },
     isDeleted: {
       type: Boolean,

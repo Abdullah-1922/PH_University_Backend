@@ -28,9 +28,10 @@ academicDepartmentSchema.pre("save", async function (next) {
 academicDepartmentSchema.pre("findOneAndUpdate", async function (next) {
   const query = this.getQuery();
 
-  const isDepartmentExists = await AcademicDepartment.findOne({
-    query,
-  });
+ 
+  const isDepartmentExists = await AcademicDepartment.findOne(
+    query
+  );
 
   if (!isDepartmentExists) {
     throw new AppError(404, "This department is not exists");

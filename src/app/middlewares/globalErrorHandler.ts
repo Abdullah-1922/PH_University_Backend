@@ -23,23 +23,26 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
       message: "Something went wrong",
     },
   ];
-
+   
   if (err instanceof ZodError) {
     const simplifiedError = handleZodError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-  } else if (err?.name === "ValidationError") {
+  }
+   else if (err?.name === "ValidationError") {
     const simplifiedError = handleValidationError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-  } else if (err?.name === "CastError") {
+  } 
+  else if (err?.name === "CastError") {
     const simplifiedError = handleCastError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-  } else if (err?.code === 11000) {
+  } 
+  else if (err?.code === 11000) {
     const simplifiedError = handleDuplicateError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
@@ -53,7 +56,8 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
         message: err.message,
       },
     ];
-  } else if (err instanceof Error) {
+  } 
+  else if (err instanceof Error) {
     message = err.message;
     errorSources = [
       {
@@ -67,7 +71,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorSources,
-    // err,
+    err,
     stack: config.NODE_ENV === "development" ? err?.stack : null,
   });
 };
@@ -75,6 +79,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
 export default globalErrorHandler;
 
 // pattern
+
 /* 
 success
 message

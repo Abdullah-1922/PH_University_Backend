@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { facultyController } from "./faculty.controller";
 
-const route =Router()
+const route = Router();
 
-route.get('/:facultyId',facultyController.getFacultyById)
+route.get("/:id", facultyController.getFacultyById);
+route.patch("/:id", facultyController.updateFaculty);
+route.delete("/:id", facultyController.deleteFaculty);
+route.get("/", facultyController.getAllFaculty);
 
-
-
-export const facultyRoute =route
-
+export const facultyRoute = route;

@@ -73,13 +73,17 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 
   // return fieldQuery;
 
-  const studentQuery = new QueryBuilder(Student.find() .populate("admissionSemester")
-    .populate({
-      path: "academicDepartment",
-      populate: {
-        path: "academicFaculty",
-      },
-    }), query)
+  const studentQuery = new QueryBuilder(
+    Student.find()
+      .populate("admissionSemester")
+      .populate({
+        path: "academicDepartment",
+        populate: {
+          path: "academicFaculty",
+        },
+      }),
+    query
+  )
     .search(studentSearchableFields)
     .filter()
     .sort()
@@ -91,7 +95,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 };
 const getStudentByID = async (id: string) => {
   // const result = await Student.findOne({ id });
-  const result = await Student.findOne({ id })
+  const result = await Student.findById({ _id: id })
     .populate("admissionSemester")
     .populate({
       path: "academicDepartment",
@@ -130,16 +134,20 @@ const updateStudentByID = async (id: string, payload: Partial<StudentType>) => {
     }
   }
 
-  const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
-    new: true,
-    runValidators: true,
-  });
+  const result = await Student.findByIdAndUpdate(
+    { _id: id },
+    modifiedUpdatedData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   return result;
 };
 
 const deleteStudentFromDB = async (id: string) => {
-  const userExist = await Student.findOne({ id: id });
+  const userExist = await Student.findOne({ _id: id });
 
   if (!userExist) {
     throw new AppError(httpStatus.NOT_FOUND, "Student Not found");
@@ -150,8 +158,8 @@ const deleteStudentFromDB = async (id: string) => {
   try {
     session.startTransaction();
 
-    const deletedStudent = await Student.findOneAndUpdate(
-      { id },
+    const deletedStudent = await Student.findByIdAndUpdate(
+      { _id: id },
       { isDeleted: true },
       { new: true, session }
     );
@@ -160,8 +168,8 @@ const deleteStudentFromDB = async (id: string) => {
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to create student");
     }
 
-    const deletedUser = await User.findOneAndUpdate(
-      { id },
+    const deletedUser = await User.findByIdAndUpdate(
+      { _id: deletedStudent.user },
       { isDeleted: true },
       { new: true, session }
     );

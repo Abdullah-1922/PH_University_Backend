@@ -17,7 +17,7 @@ const getAllStudents = catchAsync(async (req, res) => {
 });
 
 const getStudentByID = catchAsync(async (req, res) => {
-  const id = req.params.studentId;
+  const id = req.params.id;
   const result = await StudentServices.getStudentByID(id);
 
   sendResponse(res, {
@@ -28,8 +28,8 @@ const getStudentByID = catchAsync(async (req, res) => {
   });
 });
 const deleteStudent = catchAsync(async (req, res) => {
-  const { studentId } = req.params;
-  const result = await StudentServices.deleteStudentFromDB(studentId);
+  const { id } = req.params;
+  const result = await StudentServices.deleteStudentFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -38,9 +38,9 @@ const deleteStudent = catchAsync(async (req, res) => {
   });
 });
 const updateStudent = catchAsync(async (req, res) => {
-  const { studentId } = req.params;
+  const { id } = req.params;
   const { student } = req.body;
-  const result = await StudentServices.updateStudentByID(studentId, student);
+  const result = await StudentServices.updateStudentByID(id, student);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
