@@ -20,5 +20,9 @@ router.patch(
   "/:id",validateRequest(SemesterRegistrationValidations.updateSemesterRegistrationValidationSchema),
   SemesterRegistrationControllers.updateSemesterRegistration
 );
+router.delete(
+  "/:id",
+  SemesterRegistrationControllers.deleteSemesterRegistration
+);
 
 export const SemesterRegistrationRoutes = router;

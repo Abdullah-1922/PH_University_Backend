@@ -9,6 +9,7 @@ import { AdminRoutes } from "../modules/Admin/admin.route";
 import { CourseRoutes } from "../modules/Course/course.route";
 import { SemesterRegistrationRoutes } from "../modules/SemesterRegistration/semesterRegistration.route";
 import { offeredCourseRoutes } from "../modules/OfferedCourse/offeredCourse.route";
+import { AuthRoute } from "../modules/Auth/auth.route";
 
 const router = Router();
 
@@ -53,8 +54,13 @@ const moduleRouters = [
     path: "/offered-course",
     route: offeredCourseRoutes,
   },
+  {
+    path: "/auth",
+    route: AuthRoute,
+  },
 ];
 
 moduleRouters.forEach((route) => router.use(route.path, route.route));
 
 export default router;
+
