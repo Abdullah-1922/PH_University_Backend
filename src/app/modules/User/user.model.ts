@@ -2,17 +2,19 @@ import { Schema, model } from "mongoose";
 import { TUser, UserModel } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
+import { UserStatus } from "./user.constant";
 
 const userSchema = new Schema<TUser, UserModel>(
   {
     id: { type: String, required: true },
     password: { type: String, required: true, select: 0 },
+    email:{type:String,required:true,unique:true},
     needsPasswordChange: { type: Boolean, default: true },
     passwordChangeAt: { type: Date },
     role: { type: String, enum: ["admin", "student", "faculty"] },
     status: {
       type: String,
-      enum: ["in-progress", "blocked"],
+      enum:UserStatus ,
       default: "in-progress",
     },
     isDeleted: { type: Boolean, default: false },
